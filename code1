@@ -1,0 +1,41 @@
+#任务一
+#给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+#解题方法：双指针法，固定一个数，其他两个数与该数之和为0
+#代码
+class Solution:                    
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        n = len(nums)
+        res = []
+        for i in range(n):
+            if i>0 and nums[i] == nums[i-1]:      
+                continue
+            left = i + 1
+            right = n - 1
+            while left < right:
+                cur = nums[i] + nums[left] + nums[right]   
+                if cur == 0:
+                    res.append([nums[i], nums[left], nums[right]])
+                    while left<right and nums[left] == nums[left+1]:   
+                        left += 1
+                    while right<left and nums[right] == nums[right-1]:
+                        right -= 1
+                    left += 1
+                    right -= 1
+                elif cur > 0:
+                    right -= 1
+                else:
+                    left += 1
+        return res
+#任务二
+#给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。可以假设数组是非空的，并且给定的数组总是存在众数。
+#解题思路：利用链表，根据众数数学定义，众数位于数组中间
+#代码
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        nums.sort()
+        return nums[int(len(nums)/2)]
